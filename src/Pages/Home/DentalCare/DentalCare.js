@@ -3,7 +3,7 @@ import treatment from '../../../assets/images/treatment.png';
 
 const DentalCare = () => {
     return (
-        <div class="hero min-h-screen px-4 md:px-8 lg:px-28 mb-12 md:mb-16">
+        <div class="hero min-h-screen px-4 md:px-8 lg:px-28 mb-12 md:mb-16 lg:mb-44">
             <div class="hero-content flex-col md:flex-row px-0">
                 <img src={treatment} class="max-w-sm rounded-lg shadow-2xl w-full object-cover" />
                 <div className='lg:mx-12 mt-5 md:mt-0'>
