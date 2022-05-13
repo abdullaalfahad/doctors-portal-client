@@ -1,10 +1,9 @@
 import React from 'react';
 import chair from '../../../assets/images/chair.png';
-import bg from '../../../assets/images/bg.png'
 
 const Banner = () => {
     return (
-        <div class="hero min-h-screen bg-cover">
+        <div class="hero min-h-screen">
             <div class="hero-content flex-col lg:flex-row-reverse">
                 <img src={chair} class="max-w-lg rounded-lg shadow-2xl w-full object-cover" />
                 <div>
