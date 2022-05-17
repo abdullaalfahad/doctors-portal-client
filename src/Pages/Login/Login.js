@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import Loading from '../Shared/Loading/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -18,6 +19,7 @@ const Login = () => {
     let navigate = useNavigate();
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
+    const emailRef = useRef('');
 
     if (loading || gLoading) {
         return <Loading></Loading>
@@ -35,55 +37,56 @@ const Login = () => {
         signInWithEmailAndPassword(data.email, data.password);
     }
 
+    // const handleReset = async () => {
+    //     const email = emailRef.current.value;
+    //     console.log(email);
+    //     // if (email) {
+    //     //     await sendPasswordResetEmail(email);
+    //     //     alert('Sent email');
+    //     // }
+    //     // else {
+    //     //     alert('please enter your email address');
+    //     // }
+    // }
+
     return (
         <div className='flex justify-center items-center lg:h-screen'>
-            <div class="card w-96 bg-base-100 shadow-xl">
-                <div class="card-body">
-                    <h2 class="text-center text-2xl font-bold">Login</h2>
+            <div className="card w-96 bg-base-100 shadow-xl">
+                <div className="card-body">
+                    <h2 className="text-center text-2xl font-bold">Login</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text">Email</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="Your Email" class="input input-bordered w-full max-w-xs" {...register("email", {
-                                pattern: {
-                                    value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                    message: 'Invalid email address',
-                                }
-                            }, {
+                            <input type="email" placeholder="Your Email" className="input input-bordered w-full max-w-xs" ref={emailRef} {...register("email", {
                                 required: 'Provide email address',
                             })} />
-                            <label class="label">
-                                {errors.email?.type === 'required' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
-                                {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
+                            <label className="label">
+                                {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
                             </label>
                         </div>
 
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text">Password</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="Password" class="input input-bordered w-full max-w-xs" {...register("password", {
-                                minLength: {
-                                    value: 6,
-                                    message: 'Password must be 6 characters or longer',
-                                }
-                            }, {
+                            <input type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" {...register("password", {
                                 required: 'Provide password',
                             })} />
                             <label className="label mb-3">
-                                {errors.password?.type === 'required' && <span class="label-text-alt text-red-500">{errors.password.message}</span>}
-                                {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-500">{errors.password.message}</span>}
+                                {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             </label>
                         </div>
                         {errorMessage}
+
                         <input className='btn w-full max-w-xs' type="submit" value="Login" />
                     </form>
-
+                    {/* <p className='mb-4'><button className="btn btn-link" onClick={handleReset}>Forget password?</button></p> */}
                     <p className='text-center'><small>New to Doctors Portal? <Link className='text-primary' to="/signup">Create new account</Link></small></p>
 
-                    <div class="divider">OR</div>
-                    <button class="btn btn-outline uppercase" onClick={() => signInWithGoogle()}>Continue with google</button>
+                    <div className="divider">OR</div>
+                    <button className="btn btn-outline uppercase" onClick={() => signInWithGoogle()}>Continue with google</button>
                 </div>
             </div>
         </div>
