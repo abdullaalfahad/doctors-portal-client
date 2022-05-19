@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Loading from '../Shared/Loading/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -20,6 +21,7 @@ const Login = () => {
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
     const emailRef = useRef('');
+    const [token] = useToken(user || gUser);
 
     if (loading || gLoading) {
         return <Loading></Loading>
@@ -29,7 +31,7 @@ const Login = () => {
         errorMessage = <p className='text-red-500 mb-4'>{error?.message || gError?.message}</p>
     }
 
-    if (user || gUser) {
+    if (token) {
         navigate(from, { replace: true });
     }
 

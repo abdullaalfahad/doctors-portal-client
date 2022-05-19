@@ -30,7 +30,7 @@ const SignUp = () => {
         errorMessage = <p className='text-red-500 mb-4'>{error?.message || gError?.message || uError?.message}</p>
     }
 
-    if (user || gUser) {
+    if (token) {
         navigate(from, { replace: true });
     }
 
