@@ -13,7 +13,7 @@ const MyAppointment = () => {
     }, [])
 
     return (
-        <div>
+        <div className=''>
             <h1>My Appointment: {appointments.length}</h1>
             <div class="overflow-x-auto">
                 <table class="table w-full">
@@ -28,8 +28,8 @@ const MyAppointment = () => {
                     </thead>
                     <tbody>
                         {
-                            appointments.map(a => <tr>
-                                <th>1</th>
+                            appointments.map((a, index) => <tr>
+                                <th>{index + 1}</th>
                                 <td>{a.patientName}</td>
                                 <td>{a.date}</td>
                                 <td>{a.slot}</td>
