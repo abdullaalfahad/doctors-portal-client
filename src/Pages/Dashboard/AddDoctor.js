@@ -2,10 +2,11 @@ import { async } from '@firebase/util';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Loading from '../Shared/Loading/Loading';
 
 const AddDoctor = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/services').then(res => res.json()))
 
     if (isLoading) {
@@ -33,8 +34,25 @@ const AddDoctor = () => {
                         specialty: data.specialty,
                         img: img
                     }
-                    console.log(doctor)
                     // send to database
+                    fetch('http://localhost:5000/doctor', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctor)
+                    })
+                        .then(res => res.json())
+                        .then(inserted => {
+                            if (inserted.insertedId) {
+                                toast.success('Doctor added successfully');
+                                reset();
+                            }
+                            else {
+                                toast.error('Failed to add doctor');
+                            }
+                        })
                 }
             })
     }
@@ -78,7 +96,7 @@ const AddDoctor = () => {
                         <label className="label">
                             <span className="label-text">Specialty</span>
                         </label>
-                        <select {...register("specialty")} required class="select w-full max-w-xs">
+                        <select {...register("specialty")} required class="select input-bordered w-full max-w-xs">
                             {services.map(service => <option key={service._id} value={service.name}>{service.name}</option>)}
                         </select>
                     </div>
