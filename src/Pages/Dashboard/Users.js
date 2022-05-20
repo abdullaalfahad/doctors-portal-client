@@ -16,7 +16,7 @@ const Users = () => {
 
     return (
         <div>
-            <h1>All Users: {users?.length}</h1>
+            <h1 className='lg:text-3xl underline my-5'>All Users: {users?.length}</h1>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>

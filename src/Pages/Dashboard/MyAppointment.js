@@ -29,7 +29,7 @@ const MyAppointment = () => {
 
     return (
         <div className=''>
-            <h1>My Appointment: {appointments?.length}</h1>
+            <h1 className='lg:text-3xl underline my-5'>My Appointment: {appointments?.length}</h1>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>

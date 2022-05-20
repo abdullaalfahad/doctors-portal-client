@@ -14,7 +14,7 @@ const Dashboard = () => {
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     {/* Page content here */}
-                    <h1 className='text-2xl lg:text-5xl text-secondary text-center'>Dashboard</h1>
+                    <h1 className='text-2xl lg:text-5xl text-primary text-center font-extrabold'>Welcome to Dashboard</h1>
                     <Outlet></Outlet>
                 </div>
                 <div className="drawer-side">
@@ -26,7 +26,8 @@ const Dashboard = () => {
                         <li><Link to="/dashboard/history">My History</Link></li>
                         {admin && <>
                             <li><Link to="/dashboard/users">All Users</Link></li>
-                            <li><Link to="/dashboard/adddoctors">Add Doctors</Link></li>
+                            <li><Link to="/dashboard/addDoctors">Add Doctors</Link></li>
+                            <li><Link to="/dashboard/manageDoctors">Manage Doctors</Link></li>
                         </>}
                     </ul>
                 </div>

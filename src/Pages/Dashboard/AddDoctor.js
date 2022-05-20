@@ -59,7 +59,7 @@ const AddDoctor = () => {
 
     return (
         <div>
-            <h1>Add Doctor</h1>
+            <h1 className='lg:text-3xl underline my-5'>Add Doctor</h1>
             <div className=''>
                 <form onSubmit={handleSubmit(onSubmit)} className="">
                     <div className="form-control w-full max-w-xs">
