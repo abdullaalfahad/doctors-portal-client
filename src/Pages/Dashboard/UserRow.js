@@ -10,10 +10,17 @@ const UserRow = ({ user, refetch }) => {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 403) {
+                    toast.error('Only admin can do it')
+                }
+                return res.json();
+            })
             .then(data => {
-                refetch();
-                toast.success('Admin added successFully');
+                if (data.matchedCount > 0) {
+                    refetch();
+                    toast.success('Admin added successFully');
+                }
             })
     }
 
