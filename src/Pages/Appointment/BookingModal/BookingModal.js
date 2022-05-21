@@ -6,7 +6,7 @@ import auth from '../../../firebase.init';
 
 const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
     const [user] = useAuthState(auth);
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price } = treatment;
     const handleSubmit = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
@@ -16,6 +16,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
             treatmentId: _id,
             treatment: name,
             date: formattedDate,
+            price,
             slot,
             patientEmail: user.email,
             patientName: user.displayName,
@@ -32,13 +33,14 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    refetch();
                     toast(`Appointment booking on ${formattedDate} at ${slot}`)
                 }
                 else {
                     toast.error(`Already have appointment on ${data.booking?.date} at ${data.booking?.slot}`)
                 }
             })
-        refetch();
+
         // to close the modal
         setTreatment(null);
 
