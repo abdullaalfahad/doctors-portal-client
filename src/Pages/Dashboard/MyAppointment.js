@@ -10,7 +10,7 @@ const MyAppointment = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/booking?patientEmail=${user.email}`, {
+        fetch(`https://fierce-anchorage-70163.herokuapp.com/booking?patientEmail=${user.email}`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -52,7 +52,10 @@ const MyAppointment = () => {
                                 <td>{a.treatment}</td>
                                 <td>
                                     {(a.price && !a.paid) && <Link to={`/dashboard/payment/${a._id}`}><button className='btn btn-sm'>Pay</button></Link>}
-                                    {(a.price && a.paid) && <span className='text-success'>Paid</span>}
+                                    {(a.price && a.paid) && <div>
+                                        <span className='text-success font-bold'>Paid, </span>
+                                        <span className='text-success'>TransactionId: {a.transactionId}</span>
+                                    </div>}
                                 </td>
                             </tr>)
                         }
